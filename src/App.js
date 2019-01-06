@@ -1,27 +1,47 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Toolbar from './Toolbar'
+import Message from './Message'
+import ComposeForm from './ComposeForm'
 import './App.css';
 
 class App extends Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
+      messages : [
+        {
+          "subject": "test",
+          "read": false,
+          "starred": true,
+          "labels": [
+              "dev",
+              "personal"
+          ],
+          "body": "test",
+          "id": 1
+        }
+      ]
+    }
+  }
+
+  addItem = (newItem) => {
+    this.setState({
+      ...this.state,
+      messages: [...this.state.messages, newItem]
+    })
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className= "container">
+        <Toolbar/>
+        <ComposeForm/>
+        <Message 
+          messages = {this.state.messages}
+          addItem = {this.addItem}/>
       </div>
-    );
+    )
   }
 }
 
